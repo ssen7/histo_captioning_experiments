@@ -1,0 +1,4 @@
+To execute the default application inside the container, run:
+singularity run --nv $CONTAINERDIR/pytorch-1.10.0.sif
+
+slurmstepd: error: *** JOB 44467824 ON udc-aj40-35 CANCELLED AT 2022-10-28T21:11:58 DUE TO TIME LIMIT ***
