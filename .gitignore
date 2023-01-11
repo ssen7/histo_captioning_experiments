@@ -1,3 +1,11 @@
+*.tar
+*.pickle
+*__pycache__*
+*.DS_store
+*.pyc
+*.pth
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
