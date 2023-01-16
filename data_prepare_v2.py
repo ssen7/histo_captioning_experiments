@@ -12,7 +12,7 @@ def main():
     paths = {x.split('/')[-1].split('.')[0]:os.path.join(svs_path,x) for x in os.listdir(svs_path)}
     patch_path='/project/GutIntelligenceLab/ss4yd/gtex_data/patches/patches/'
     patch_paths = {x.split('/')[-1].split('.')[0]:os.path.join(patch_path,x) for x in os.listdir(patch_path)}
-    reps_path='/project/GutIntelligenceLab/ss4yd/gtex_data/hipt4kreps'
+    reps_path='/project/GutIntelligenceLab/ss4yd/gtex_data/hipt4k_256cls_reps/'
     reps_paths = {x.split('/')[-1].split('.')[0]:os.path.join(reps_path,x) for x in os.listdir(reps_path)}
 
     df=pd.read_csv('/home/ss4yd/vision_transformer/captioning_vision_transformer/GTExPortal.csv')
@@ -27,7 +27,7 @@ def main():
     print(df.head())
     print(df.shape)
 
-    df.to_csv('./prepared_prelim_data.csv',index=False)
+    df.to_csv('./prepared_prelim_data_cls256.csv',index=False)
 
 if __name__ == "__main__":
     main()

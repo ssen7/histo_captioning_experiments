@@ -16,6 +16,39 @@ from HIPT.HIPT_4K.hipt_4k import HIPT_4K
 from HIPT.HIPT_4K.hipt_model_utils import get_vit256, get_vit4k, eval_transforms
 from HIPT.HIPT_4K.hipt_heatmap_utils import *
 
+class PreLoadedReps_v2(Dataset):
+
+    def __init__(self, df_path, dtype='train', transform=None, target_transform=None):
+        self.df_path = df_path
+        df = pd.read_pickle(self.df_path)
+        self.dtype=dtype
+        self.df=df[df.dtype==dtype]
+        self.transform = transform
+        self.target_transform = target_transform
+    
+    def __len__(self):
+        return len(self.df)
+
+    def __getitem__(self, idx):
+        svs_path=self.df.iloc[idx]['svs_path']
+        patch_path=self.df.iloc[idx]['patch_path']
+        reps_path=self.df.iloc[idx]['reps_path']
+        idx_tokens=self.df.iloc[idx]['idx_tokens']
+        caplens=self.df.iloc[idx]['caplens']
+
+        rep_tensors = torch.load(reps_path)
+        caption_tensor = torch.LongTensor(idx_tokens)
+        caplen = torch.LongTensor([caplens])
+        
+        if self.dtype=='train':
+#             rep_tensor = rep_tensors[random.randint(0, len(rep_tensors)-1),:,:]
+            rep_tensor=rep_tensors
+            return rep_tensor, caption_tensor, caplen
+        else:
+            rep_tensor=rep_tensors
+            all_captions=torch.LongTensor([idx_tokens])
+            return rep_tensor, caption_tensor, caplen, all_captions
+
 class PreLoadedReps(Dataset):
 
     def __init__(self, df_path, dtype='train', transform=None, target_transform=None):
